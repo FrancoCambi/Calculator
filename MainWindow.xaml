@@ -1,0 +1,483 @@
+﻿<Window x:Class="Calculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Calculator"
+        mc:Ignorable="d"
+        Title="Calculator1.0" Height="542" Width="319"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown">
+
+    <Border CornerRadius="20"
+            BorderThickness="4">
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#462AD8" Offset="0"/>
+                <GradientStop Color="#DA34AE" Offset="0.75"/>
+                <GradientStop Color="#8A16C1" Offset="1"/>
+
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+
+        <Border.Background>
+            <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                <GradientStop Color="#060531" Offset="0"/>
+                <GradientStop Color="#1B1448" Offset="0.50"/>
+
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition/>
+
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="TypeText"
+                       Text="Estándar"
+                       VerticalAlignment="Center"
+                       Margin="10,0,0,0"
+                       Foreground="White"
+                       FontSize="20"
+                       FontFamily="Montserrat"
+                       Grid.Row="1">
+
+            </TextBlock>
+
+            <TextBlock x:Name="ResultText"
+                       Text="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="0,0,10,0"
+                       Foreground="White"
+                       FontSize="50"
+                       FontFamily="Montserrat"
+                       Grid.Row="2">
+
+            </TextBlock>
+
+
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+
+
+                <TextBlock Text="Calculadora"
+                           Foreground="DarkGray"
+                           FontSize="12"
+                           FontFamily="Montserrat"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0">
+
+                </TextBlock>
+
+                <Button x:Name="btnMinimize"
+                        BorderThickness="0"
+                        Content="-"
+                        Foreground="White"
+                        FontSize="10"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"
+                        Grid.Column="1"
+                        Click="btnMinimize_Click"
+                        Margin="0,2,0,0"
+                        Style="{StaticResource MyMinimizeButtonStyle}"
+                        Template="{StaticResource MyCloseMinimizeButtonTemplate}">
+
+
+                </Button>
+                <Button x:Name="btnClose"
+                        BorderThickness="0"
+                        Content="X"
+                        Foreground="White"
+                        FontSize="10"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"
+                        Grid.Column="2"
+                        Click="btnClose_Click"
+                        Margin="0,2,0,0"
+                        Style="{StaticResource MyCloseButtonStyle}"
+                        Template="{StaticResource MyCloseMinimizeButtonTemplate}">
+
+                </Button>
+            </Grid>
+
+            <Grid Grid.Row ="3">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+
+
+                <Button x:Name="NegateButton"
+                        Content="+/-"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="NegateButton_Click">
+
+                </Button>
+
+                <Button x:Name="ZeroButton"
+                        Content="0"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="ZeroButton_Click">
+
+                </Button>
+
+                <Button x:Name="PointButton"
+                        Content="."
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="5"
+                        Grid.Column="2"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="PointButton_Click">
+
+                </Button>
+
+                <Button x:Name="EqualButton"
+                        Content="="
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="5"
+                        Grid.Column="3"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="EqualButton_Click">
+
+                </Button>
+
+
+                <Button x:Name="PlusButton"
+                        Content="+"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="4"
+                        Grid.Column="3"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="PlusButton_Click">
+
+                </Button>
+
+                <Button x:Name="MinusButton"
+                        Content="-"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="3"
+                        Grid.Column="3"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="MinusButton_Click">
+
+                </Button>
+
+                <Button x:Name="ProductButton"
+                        Content="X"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="2"
+                        Grid.Column="3"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="ProductButton_Click">
+
+                </Button>
+
+                <Button x:Name="DivideButton"
+                        Content="/"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="DivideButton_Click">
+
+                </Button>
+                
+                
+                <Button x:Name="DeleteButton"
+                        Content="->"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="0"
+                        Grid.Column="3"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="DeleteButton_Click">
+
+                </Button>
+
+                <Button x:Name="ClearButton"
+                        Content="C"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="ClearButton_Click">
+
+                </Button>
+
+                <Button x:Name="CEButton"
+                        Content="CE"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="CEButton_Click">
+
+                </Button>
+
+                <Button x:Name="PorcentajeButton"
+                        Content="%"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="PorcentajeButton_Click">
+
+                </Button>
+
+                <Button x:Name="ReciprocalButton"
+                        Content="1/x"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="ReciprocalButton_Click">
+
+                </Button>
+
+                <Button x:Name="SquareButton"
+                        Content="x²"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="SquareButton_Click">
+
+                </Button>
+
+                <Button x:Name="SquareRootButton"
+                        Content="²√x"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Style="{StaticResource MyOperationButtonStyle}"
+                        Template="{StaticResource MyOperationButtonTemplate}"
+                        Click="SquareRootButton_Click">
+
+                </Button>
+
+                <Button x:Name="OneButton"
+                        Content="1"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="OneButton_Click">
+
+                </Button>
+
+                <Button x:Name="TwoButton"
+                        Content="2"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="TwoButton_Click" >
+
+                </Button>
+
+                <Button x:Name="ThreeButton"
+                        Content="3"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="4"
+                        Grid.Column="2"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="ThreeButton_Click">
+
+                </Button>
+
+                <Button x:Name="FourButton"
+                        Content="4"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="FourButton_Click">
+
+                </Button>
+
+                <Button x:Name="FiveButton"
+                        Content="5"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="FiveButton_Click">
+
+                </Button>
+
+                <Button x:Name="SixButton"
+                        Content="6"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="SixButton_Click">
+
+                </Button>
+
+                <Button x:Name="SevenButton"
+                        Content="7"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="SevenButton_Click">
+
+                </Button>
+
+                <Button x:Name="EightButton"
+                        Content="8"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="EightButton_Click">
+
+                </Button>
+
+                <Button x:Name="NineButton"
+                        Content="9"
+                        BorderThickness="0"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        Style="{StaticResource MyNumberButtonStyle}"
+                        Template="{StaticResource MyNumberButtonTemplate}"
+                        Click="NineButton_Click">
+
+                </Button>
+
+            </Grid>
+            
+        </Grid>
+        
+
+    </Border>
+</Window>
