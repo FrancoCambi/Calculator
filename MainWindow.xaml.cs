@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Calculator
 {
@@ -24,33 +25,72 @@ namespace Calculator
     {
         private string CurrentNum = "";
         private const int MaxLenNumber = 11;
+        private const int DefaultFontSize = 50;
 
         private List<double> Nums = new();
-        private string? Operator;
-        private bool NewOperation = false;
+        private string? Operator = "";
+        private double Result;
+        private double QueueNum;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        private void Reset(bool text)
+        {
+            Nums.Clear();
+            CurrentNum = "";
+            Operator = "";
+            if (text)
+            {
+                ResultText.Text = "0";
+            }
+            ResultText.FontSize = DefaultFontSize;
+        }
+
         private void AddShowNumber(string number)
         {
-            if (CurrentNum.Length < MaxLenNumber)
+            if (CurrentNum == "0")
+            {
+                CurrentNum = number;
+                ResultText.FontSize = DefaultFontSize;
+                ResultText.Text = CurrentNum;
+
+            }
+            else if (CurrentNum.Length < MaxLenNumber)
             {
                 CurrentNum += number;
+                ResultText.FontSize = DefaultFontSize;
                 ResultText.Text = CurrentNum;
             }
         }
 
-        private void MakeOperation(string? _operator)
+        private void MakeOperation(bool equal) 
         {
-            if (Nums.Count < 2 && CurrentNum != "")
+    
+            if (CurrentNum == "" && equal && Nums.Count > 0)
             {
-                Operator = _operator;
-                Nums.Add(Convert.ToDouble(CurrentNum));
-                CurrentNum = "";
+                CurrentNum = QueueNum.ToString();
             }
+            if (CurrentNum != "")
+            {
+
+                Nums.Add(Convert.ToDouble(CurrentNum));
+                QueueNum = Convert.ToDouble(CurrentNum);
+                Result = Convert.ToDouble(CurrentNum);
+                CurrentNum = "";
+
+                if (Nums.Count == 2)
+                {
+                    Result = Math.Round(SolveOperation(Nums[0], Nums[1], Operator), MaxLenNumber - 3);
+                    bool text = Result == double.MaxValue ? false : true;
+                    ShowResult(Result, text);
+
+                }
+
+            }
+
 
         }
 
@@ -59,11 +99,33 @@ namespace Calculator
             double result;
             switch (operation)
             {
+                case "=":
+                    result = num1; 
+                    break;
                 case "+":
                     result = num1 + num2;
                     break;
                 case "-":
                     result = num1 - num2;
+                    break;
+                case "*":
+                    result = num1 * num2;
+                    break;
+                case "/":
+                    if (num2 == 0)
+                    {
+                        ResultText.FontSize = DefaultFontSize / 2.3;
+                        ResultText.Text = "No se puede dividir por cero.";
+                        result = double.MaxValue;
+                    }
+                    else
+                    {
+                        result = num1 / num2;
+
+                    }
+                    break;
+                case "%":
+                    result = num1 * (num2/100);
                     break;
                 default:
                     result = 0;
@@ -74,16 +136,22 @@ namespace Calculator
             return result;
         }
 
-        private void ShowResult()
+        private void ShowResult(double result, bool text)
         {
-            double result;
-            MakeOperation(Operator);
-            if (Nums.Count == 2)
+            if (result.ToString().Length <= MaxLenNumber)
             {
-                result = SolveOperation(Nums[0], Nums[1], Operator);
-                ResultText.Text = result.ToString();
+                if (text)
+                {
+                    ResultText.Text = Result.ToString();
+                }
                 Nums.Clear();
-                CurrentNum = result.ToString();
+                Nums.Add(Result);
+            }
+            else
+            {
+                ResultText.Text = "Límite alcanzado.";
+                ResultText.FontSize = DefaultFontSize / 2;
+                Reset(false);
             }
         }
 
@@ -106,84 +174,130 @@ namespace Calculator
             Application.Current.Shutdown();
         }
 
-        private void ZeroButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber("0");
-        }
-
-        private void NegateButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void PointButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber(".");
-        }
 
         private void EqualButton_Click(object sender, RoutedEventArgs e)
         {
 
-            ShowResult();
+            MakeOperation(true);
+            if (Operator == "")
+            {
+
+                Operator = "=";
+            }
 
         }
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
         {
 
-            MakeOperation("+");
+            MakeOperation(false);
+            Operator = "+";
         }
 
         private void MinusButton_Click(object sender, RoutedEventArgs e)
         {
-            MakeOperation("-");
+
+            MakeOperation(false);
+            Operator = "-";
+
+            
         }
 
         private void DivideButton_Click(object sender, RoutedEventArgs e)
         {
-            MakeOperation("/");
+            MakeOperation(false);
+            Operator = "/";
+        }
+        private void ProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            MakeOperation(false);
+            Operator = "*";
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentNum.Length > 1)
+            {
+                CurrentNum = CurrentNum.Remove(CurrentNum.Length - 1, 1);
+                ResultText.Text = CurrentNum;
+            }
+            else
+            {
+                Reset(true);
+            }
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            CurrentNum = "";
+            CurrentNum = "0";
             ResultText.Text = CurrentNum;
         }
 
         private void CEButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Reset(true);
         }
 
         private void PorcentajeButton_Click(object sender, RoutedEventArgs e)
         {
-            MakeOperation("%");
+            MakeOperation(false);
+            Operator = "%";
         }
 
         private void ReciprocalButton_Click(object sender, RoutedEventArgs e)
         {
+            Result = Math.Round(Math.Pow(Convert.ToDouble(ResultText.Text), -1), MaxLenNumber - 3);
+            CurrentNum = "";
+            if (Convert.ToDouble(ResultText.Text) == 0)
+            {
+                ResultText.FontSize = DefaultFontSize / 2.3;
+                ResultText.Text = "No se puede dividir por cero.";
 
+            }
+            else
+            {
+                ShowResult(Result, true);
+            }
         }
 
         private void SquareButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Result = Math.Round(Math.Pow(Convert.ToDouble(ResultText.Text), 2), MaxLenNumber - 3);
+            CurrentNum = "";
+            ShowResult(Result, true);
         }
 
         private void SquareRootButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Result = Math.Round(Math.Pow(Convert.ToDouble(ResultText.Text), 0.5), MaxLenNumber - 3);
+            CurrentNum = "";
+            ShowResult(Result, true);
         }
 
-        private void ProductButton_Click(object sender, RoutedEventArgs e)
+        private void NegateButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentNum != "")
+            {
+                double newCurrentNum = Convert.ToDouble(CurrentNum);
+                newCurrentNum *= -1;
+                CurrentNum = newCurrentNum.ToString();
+                ResultText.Text = CurrentNum;
+            }
+            else
+            {
+                CurrentNum += "-";
+            }
         }
+
+        private void PointButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddShowNumber(".");
+        }
+        private void ZeroButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddShowNumber("0");
+        }
+
 
         private void OneButton_Click(object sender, RoutedEventArgs e)
         {

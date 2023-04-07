@@ -8,11 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Negate.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Assets\Negate.png" />
+    <Folder Include="Assets\" />
   </ItemGroup>
 
 </Project>
