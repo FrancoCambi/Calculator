@@ -26,6 +26,7 @@ namespace Calculator
         private string CurrentNum = "";
         private const int MaxLenNumber = 11;
         private const int DefaultFontSize = 50;
+        private Types Type = Types.Estándar;
 
         private List<double> Nums = new();
         private string? Operator = "";
@@ -36,6 +37,7 @@ namespace Calculator
         public MainWindow()
         {
             InitializeComponent();
+            TypeText.Text = Type.ToString();
         }
 
         private void Reset(bool text)
@@ -312,5 +314,84 @@ namespace Calculator
             }
         }
 
+        // CIENTIFICA
+
+        private void TypeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Type == Types.Estándar)
+            {
+                Type = Types.Científica;
+                TypeText.Text = Types.Científica.ToString();
+                GridEstandar.Visibility = Visibility.Hidden;
+                GridCientifica.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Type = Types.Estándar;
+                TypeText.Text = Types.Estándar.ToString();
+                GridCientifica.Visibility = Visibility.Hidden;
+                GridEstandar.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void NatLogC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LogC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TenPowerC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void XPowerYC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PiC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AbsC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ModC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FactorialC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ParenthesisOpenC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ParenthesisCloseC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SwitchSomeOptC_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

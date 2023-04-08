@@ -54,6 +54,15 @@
             </Border>
         </ControlTemplate>
 
+        <ControlTemplate x:Key="MyNumberButtonCientificaTemplate" TargetType="Button">
+            <Border Width="55" Height="46"
+                    CornerRadius="10"
+                    Background="{TemplateBinding Background}">
+                <ContentPresenter VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"/>
+            </Border>
+        </ControlTemplate>
+
         <Style x:Key="MyOperationButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#FF3C0088"/>
             <Style.Triggers>
@@ -66,6 +75,15 @@
 
         <ControlTemplate x:Key="MyOperationButtonTemplate" TargetType="Button">
             <Border Width="70" Height="45"
+                    CornerRadius="10"
+                    Background="{TemplateBinding Background}">
+                <ContentPresenter VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"/>
+            </Border>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="MyTypeButtonTemplate" TargetType="Button">
+            <Border
                     CornerRadius="10"
                     Background="{TemplateBinding Background}">
                 <ContentPresenter VerticalAlignment="Center"
