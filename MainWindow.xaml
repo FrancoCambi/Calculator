@@ -52,6 +52,20 @@
 
             </TextBlock>
 
+            <TextBlock x:Name="PreviewText"
+                       Text="Preview"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Right"
+                       Margin="0,0,10,0"
+                       Foreground="White"
+                       Opacity="0.7"
+                       FontSize="15"
+                       FontFamily="Montserrat"
+                       Grid.Row="2"
+                       Visibility="Hidden">
+                
+            </TextBlock>
+
             <TextBlock x:Name="ResultText"
                        Text="0"
                        VerticalAlignment="Center"
@@ -160,7 +174,7 @@
                         Grid.Column="1"
                         Style="{StaticResource MyNumberButtonStyle}"
                         Template="{StaticResource MyNumberButtonTemplate}"
-                        Click="ZeroButton_Click">
+                        Click="NumButton_Click">
 
                 </Button>
 
@@ -174,7 +188,7 @@
                         Grid.Column="2"
                         Style="{StaticResource MyNumberButtonStyle}"
                         Template="{StaticResource MyNumberButtonTemplate}"
-                        Click="PointButton_Click">
+                        Click="NumButton_Click">
 
                 </Button>
 
@@ -358,7 +372,7 @@
                         Grid.Column="0"
                         Style="{StaticResource MyNumberButtonStyle}"
                         Template="{StaticResource MyNumberButtonTemplate}"
-                        Click="OneButton_Click">
+                        Click="NumButton_Click">
 
                 </Button>
 
@@ -372,7 +386,7 @@
                         Grid.Column="1"
                         Style="{StaticResource MyNumberButtonStyle}"
                         Template="{StaticResource MyNumberButtonTemplate}"
-                        Click="TwoButton_Click" >
+                        Click="NumButton_Click" >
 
                 </Button>
 
@@ -386,7 +400,7 @@
                         Grid.Column="2"
                         Style="{StaticResource MyNumberButtonStyle}"
                         Template="{StaticResource MyNumberButtonTemplate}"
-                        Click="ThreeButton_Click">
+                        Click="NumButton_Click">
 
                 </Button>
 
@@ -400,7 +414,7 @@
                         Grid.Column="0"
                         Style="{StaticResource MyNumberButtonStyle}"
                         Template="{StaticResource MyNumberButtonTemplate}"
-                        Click="FourButton_Click">
+                        Click="NumButton_Click">
 
                 </Button>
 
@@ -414,7 +428,7 @@
                         Grid.Column="1"
                         Style="{StaticResource MyNumberButtonStyle}"
                         Template="{StaticResource MyNumberButtonTemplate}"
-                        Click="FiveButton_Click">
+                        Click="NumButton_Click">
 
                 </Button>
 
@@ -428,7 +442,7 @@
                         Grid.Column="2"
                         Style="{StaticResource MyNumberButtonStyle}"
                         Template="{StaticResource MyNumberButtonTemplate}"
-                        Click="SixButton_Click">
+                        Click="NumButton_Click">
 
                 </Button>
 
@@ -442,7 +456,7 @@
                         Grid.Column="0"
                         Style="{StaticResource MyNumberButtonStyle}"
                         Template="{StaticResource MyNumberButtonTemplate}"
-                        Click="SevenButton_Click">
+                        Click="NumButton_Click">
 
                 </Button>
 
@@ -456,7 +470,7 @@
                         Grid.Column="1"
                         Style="{StaticResource MyNumberButtonStyle}"
                         Template="{StaticResource MyNumberButtonTemplate}"
-                        Click="EightButton_Click">
+                        Click="NumButton_Click">
 
                 </Button>
 
@@ -470,7 +484,7 @@
                         Grid.Column="2"
                         Style="{StaticResource MyNumberButtonStyle}"
                         Template="{StaticResource MyNumberButtonTemplate}"
-                        Click="NineButton_Click">
+                        Click="NumButton_Click">
 
                 </Button>
 

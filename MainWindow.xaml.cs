@@ -31,6 +31,7 @@ namespace Calculator
         private string? Operator = "";
         private double Result;
         private double QueueNum;
+        private string Preview = "";
 
         public MainWindow()
         {
@@ -46,22 +47,26 @@ namespace Calculator
             {
                 ResultText.Text = "0";
             }
-            ResultText.FontSize = DefaultFontSize;
         }
 
-        private void AddShowNumber(string number)
+        private void AddShowNumber(string? number)
         {
             if (CurrentNum == "0")
             {
                 CurrentNum = number;
+
+
                 ResultText.FontSize = DefaultFontSize;
+                ResultText.TextWrapping = TextWrapping.NoWrap;
                 ResultText.Text = CurrentNum;
 
             }
             else if (CurrentNum.Length < MaxLenNumber)
             {
                 CurrentNum += number;
+
                 ResultText.FontSize = DefaultFontSize;
+                ResultText.TextWrapping = TextWrapping.NoWrap;
                 ResultText.Text = CurrentNum;
             }
         }
@@ -149,9 +154,31 @@ namespace Calculator
             }
             else
             {
-                ResultText.Text = "Límite alcanzado.";
                 ResultText.FontSize = DefaultFontSize / 2;
+                ResultText.Text = "Límite alcanzado.";
                 Reset(false);
+            }
+        }
+
+        private void MakePowerOperation(double power)
+        {
+            var isNumeric = Double.TryParse(ResultText.Text, out _);
+
+            if (isNumeric)
+            {
+                if (power == -1 && Convert.ToDouble(ResultText.Text) == 0)
+                {
+                    ResultText.FontSize = DefaultFontSize / 2.3;
+                    ResultText.Text = "El cero no tiene inverso multiplicativo.";
+                    ResultText.TextWrapping = TextWrapping.Wrap;
+
+                }
+                else
+                {
+                    Result = Math.Round(Math.Pow(Convert.ToDouble(ResultText.Text), power), MaxLenNumber - 3);
+                    CurrentNum = "";
+                    ShowResult(Result, true);
+                }
             }
         }
 
@@ -190,28 +217,28 @@ namespace Calculator
         private void PlusButton_Click(object sender, RoutedEventArgs e)
         {
 
-            MakeOperation(false);
             Operator = "+";
+            MakeOperation(false);
         }
 
         private void MinusButton_Click(object sender, RoutedEventArgs e)
         {
 
-            MakeOperation(false);
             Operator = "-";
+            MakeOperation(false);
 
             
         }
 
         private void DivideButton_Click(object sender, RoutedEventArgs e)
         {
-            MakeOperation(false);
             Operator = "/";
+            MakeOperation(false);
         }
         private void ProductButton_Click(object sender, RoutedEventArgs e)
         {
-            MakeOperation(false);
             Operator = "*";
+            MakeOperation(false);
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -246,32 +273,18 @@ namespace Calculator
 
         private void ReciprocalButton_Click(object sender, RoutedEventArgs e)
         {
-            Result = Math.Round(Math.Pow(Convert.ToDouble(ResultText.Text), -1), MaxLenNumber - 3);
-            CurrentNum = "";
-            if (Convert.ToDouble(ResultText.Text) == 0)
-            {
-                ResultText.FontSize = DefaultFontSize / 2.3;
-                ResultText.Text = "No se puede dividir por cero.";
 
-            }
-            else
-            {
-                ShowResult(Result, true);
-            }
+            MakePowerOperation(-1);
         }
 
         private void SquareButton_Click(object sender, RoutedEventArgs e)
         {
-            Result = Math.Round(Math.Pow(Convert.ToDouble(ResultText.Text), 2), MaxLenNumber - 3);
-            CurrentNum = "";
-            ShowResult(Result, true);
+            MakePowerOperation(2);
         }
 
         private void SquareRootButton_Click(object sender, RoutedEventArgs e)
         {
-            Result = Math.Round(Math.Pow(Convert.ToDouble(ResultText.Text), 0.5), MaxLenNumber - 3);
-            CurrentNum = "";
-            ShowResult(Result, true);
+            MakePowerOperation(0.5);
         }
 
         private void NegateButton_Click(object sender, RoutedEventArgs e)
@@ -289,59 +302,15 @@ namespace Calculator
             }
         }
 
-        private void PointButton_Click(object sender, RoutedEventArgs e)
+        private void NumButton_Click(object sender, RoutedEventArgs e)
         {
-            AddShowNumber(".");
-        }
-        private void ZeroButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber("0");
+            Button? button = sender as Button;
+
+            if (button != null)
+            {
+                AddShowNumber(button.Content.ToString());
+            }
         }
 
-
-        private void OneButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber("1");
-        }
-
-        private void TwoButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber("2");
-        }
-
-        private void ThreeButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber("3");
-        }
-
-        private void FourButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber("4");
-        }
-
-        private void FiveButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber("5");
-        }
-
-        private void SixButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber("6");
-        }
-
-        private void SevenButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber("7");
-        }
-
-        private void EightButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber("8");
-        }
-
-        private void NineButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddShowNumber("9");
-        }
     }
 }
