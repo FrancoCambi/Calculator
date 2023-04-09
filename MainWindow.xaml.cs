@@ -38,9 +38,9 @@ namespace Calculator
         {
             InitializeComponent();
             TypeText.Text = Type.ToString();
-
+            
+            // Si los decimales en el idioma del SO se puntúan con ",", se cambia el botón.
             bool punctuation = Double.TryParse("0.5", out _);
-
             if (!punctuation)
             {
                 PointButton.Content = ",";
