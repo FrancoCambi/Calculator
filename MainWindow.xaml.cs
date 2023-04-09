@@ -38,6 +38,13 @@ namespace Calculator
         {
             InitializeComponent();
             TypeText.Text = Type.ToString();
+
+            bool punctuation = Double.TryParse("0.5", out _);
+
+            if (!punctuation)
+            {
+                PointButton.Content = ",";
+            }
         }
 
         private void Reset(bool text)
