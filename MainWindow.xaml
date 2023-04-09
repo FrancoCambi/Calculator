@@ -13,7 +13,7 @@
         AllowsTransparency="True"
         MouseDown="Window_MouseDown">
 
-    <Border CornerRadius="20"
+    <Border CornerRadius="20"       
             BorderThickness="4">
         <Border.BorderBrush>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">

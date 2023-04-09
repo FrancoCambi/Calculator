@@ -91,7 +91,7 @@ namespace Calculator
                 if (Nums.Count == 2)
                 {
                     Result = Math.Round(SolveOperation(Nums[0], Nums[1], Operator), MaxLenNumber - 3);
-                    bool text = Result == double.MaxValue ? false : true;
+                    bool text = Result != double.MaxValue;
                     ShowResult(Result, text);
 
                 }
